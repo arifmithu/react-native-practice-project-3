@@ -81,6 +81,7 @@ export default function App() {
             initialValues={{ passwordLength: '' }}
             validationSchema={passwordSchema}
             onSubmit={values => {
+              console.log('values', values);
               generatePasswordString(+values.passwordLength);
             }}
           >
@@ -159,14 +160,20 @@ export default function App() {
                 <View style={styles.formActions}>
                   <TouchableOpacity
                     disabled={!isValid}
-                    style={styles.submitButton}
+                    style={[
+                      styles.submitButton,
+                      !isValid && styles.generatePasswordButtonDisabled,
+                    ]}
                     onPress={() => handleSubmit()}
                   >
                     <Text>Generate Password</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     disabled={!isValid}
-                    style={styles.resetButton}
+                    style={[
+                      styles.resetButton,
+                      !isValid && styles.resetButtonDisabled,
+                    ]}
                     onPress={() => {
                       handleReset();
                       resetPasswordState();
@@ -272,6 +279,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginLeft: 5,
+  },
+  generatePasswordButtonDisabled: {
+    backgroundColor: '#ccc',
+  },
+  resetButtonDisabled: {
+    backgroundColor: '#ccc',
   },
   generatedPasswordContainer: {
     marginTop: 20,
